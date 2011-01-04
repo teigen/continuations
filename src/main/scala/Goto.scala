@@ -17,7 +17,10 @@ object Goto extends Run {
 			labels(label)()
 	}
 	
-	def cpsUnit: Unit @suspendable = ()
+//	def cpsUnit: Unit @suspendable = ()
+	
+	/* this seems to give the correct result, but I am unsure about the consequences */
+	implicit def unitIsSuspendable(u:Unit):Unit @suspendable = u
 	
 	def run = reset {
 		var i = 0
@@ -27,8 +30,8 @@ object Goto extends Run {
 		i += 1
 		if(i < 5)
 			goto("loop")
-		else
-			cpsUnit
+//		else
+//			cpsUnit
 		println("done")
 	}
 	
@@ -43,6 +46,11 @@ object Goto extends Run {
 	
 	some background:
 		http://www.scala-lang.org/node/8039
-		http://scala-programming-language.1934581.n4.nabble.com/error-then-and-else-parts-must-both-be-cps-code-or-neither-of-them-td2288582.html				
+		http://scala-programming-language.1934581.n4.nabble.com/error-then-and-else-parts-must-both-be-cps-code-or-neither-of-them-td2288582.html
+		
+	
+	The implicit conversion from Unit => Unit @suspendable seems to work 
+	(atleast gives correct result for Goto), but its such a simple hack that there must be a reason
+	its not included by default
 	*/
 }

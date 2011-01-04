@@ -2,6 +2,8 @@ import scala.util.continuations._
 
 object Goto extends Run {
 	
+	/* based on code from http://vimeo.com/13304075 about 37 minutes*/ 
+	
 	val labels = new collection.mutable.HashMap[String, Unit => Unit]
 	
 	def label(name:String) = shift { 
